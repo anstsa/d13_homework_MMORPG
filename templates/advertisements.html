@@ -1,0 +1,74 @@
+{% extends 'default.html' %}
+{% load static %} 
+
+{% block title %}
+Объявления
+{% endblock title %}
+
+{% block content %}
+
+<div>{% if user.username %}
+    Пользователь : {{ user.username }}. 
+    <a href='/accounts/logout/'>Выйти</a>
+    <br>
+    <a href="{% url 'all_responses' %}">Личная страница</a><br>
+    <a href="{% url 'add_advertisement' %}">Добавить объявления</a>
+{% else %}
+    <p>Пользователь не авторизирован: {{ user.username }} <a href="/accounts/login/">Войти</a></p>
+{% endif %}
+</div>
+<br>
+
+{% if is_paginated %}
+ 
+{% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+        <a>{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+{% endfor %}
+
+{% endif %}
+<br>
+
+<div style = "padding-bottom: 1600px;">
+    {% for advertisement in advertisements %}
+    <div class="block_gl" style="width: 48%">    
+        {% if advertisements %} 
+    
+
+            {% if advertisement.image %}
+                <p><img src="{{ advertisement.image.url }}" style="width: 100%;"></p>
+            {% else %}
+                <p></p>
+            {% endif %}
+            <h4><a href="{% url 'advertisement' advertisement.id %}">{{advertisement.title}}</a></h4>
+            <p class="text_d_a">{{advertisement.data}} &nbsp;&nbsp;&nbsp;&nbsp; Автор: {{advertisement.author}}</p>
+            
+            
+   
+        {% else %} 
+            <h2>Объявлений нет!</h2>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+            
+
+{% for num in page_obj.paginator.page_range %}
+    {% if page_obj.number == num %}
+        <a>{{ num }}</a>
+    {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+{% endfor %}
+
+
+
+{% endif %}
+<br>
+
+{% endblock content %}

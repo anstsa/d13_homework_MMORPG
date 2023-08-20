@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>info</title>
+</head>
+<body>
+    <h1>Новый отклик к вашему объявлению "{{advertisement}}"</h1>
+
+    <p>Пользователь: {{response.author}} добавил отклик:</p>
+    <p> {{response.text}}</p>
+    <p> на Ваше <a href="http://127.0.0.1:8000{% url 'advertisement' advertisement.id %}">объявление {{advertisement}}</a> </p>
+    <p>ждем Вашего решения, о принятии или удаление его.</p>
+</body>
+</html>

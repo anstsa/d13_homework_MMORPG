@@ -1,0 +1,96 @@
+{% extends 'default.html' %}
+
+ 
+{% block title %}
+Объявления
+{% endblock title %}
+ 
+{% block content %}
+{% if user_authors  %}
+    <h1> Личный кабинет пользователя : {{ user.username }} </h1>
+
+    
+
+    
+    <form method="GET">
+        {{ filter.form.as_p }} 
+        <input type="submit" value="Найти">
+    </form>
+    <div class="panel">
+        <div class="panel-body">
+          <div class="media-block">
+            
+            {% for response in filter.qs %}
+                <hr>
+                <img class="img-circle img-sm" alt="Профиль пользователя" src="https://bootstraptema.ru/snippets/icons/2016/mia/1.png">
+                <div class="media-body">
+                <div class="mar-btm">
+                <p><a href="#" class="btn-link text-semibold media-heading box-inline">{{response.author}}</a> откликнулся на объявление <a href="#" class="btn-link text-semibold media-heading box-inline">"{{comment.advertisement}}"</a></p>
+    
+                <p class="text-muted text-sm">{{response.created}}</p>
+            </div>
+                <p>{{response.text}}</p>
+          <div class="pad-ver">
+            {% if response.accepted %}
+              <p>Отклик принят</p>
+                {% else %}
+              <a class="btn btn-sm btn-default btn-hover-primary" href="{% url 'comment_delete' comment.id %}">Удалить</a>
+              <a class="btn btn-sm btn-default btn-hover-primary" href="{% url 'comment_accept' comment.id %}">Принять</a>
+                {% endif %}
+                </div>
+            </div>
+                {% empty %}
+      <h3>Откликов нет</h3>
+            {% endfor %}
+
+            {% else %} 
+            <P>Ошибка доступа</P>
+        {% endif %}
+    {% endblock content %} 
+
+
+
+
+    <h2>Список откликов </h2>
+    
+        <table class="table">
+            <tr>
+                <th scope="col">
+                    Дата
+                </th>
+                <th scope="col">
+                    Отклик
+                </th>
+                <th scope="col">
+                    Автор
+                </th>
+                <th scope="col">
+                    Объявления
+                </th>
+            </tr>
+            {% for response in response_author %}  
+            <tr>
+                <td>
+                    {{ response.datatime | date:'d M Y' }}
+                </td>
+                <td>
+                    {{ response.text }}
+                </td>
+                <td>
+                    {{ response.author }}
+                    
+
+                </td>
+                <td>
+                    {{ response.advertisement }}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+
+
+    
+    
+

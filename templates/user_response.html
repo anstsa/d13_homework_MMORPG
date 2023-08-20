@@ -1,0 +1,57 @@
+{% extends 'default.html' %}
+{% load static %}
+
+ 
+{% block title %}
+Объявления
+{% endblock title %}
+ 
+{% block content %}
+
+    <h1> Личный кабинет пользователя : {{ user.username }} </h1>
+
+    
+
+    
+    <form method="GET">
+        {{ filter.form.as_p }} 
+        <input type="submit" value="Найти">
+    </form>
+    <div class="panel">
+        <div class="panel-body">
+          <div class="media-block">
+            
+            {% for response in filter.qs %}
+                <hr>
+                
+                <div class="media-body">
+                <div class="mar-btm">
+                  
+                  {% if response.accepted %}
+                  <p><img src={% static '/assets/img/ok.png' %}  width="30"> Отклик принят</p>
+                    {% else %}
+                  <p><img src={% static '/assets/img/new.png' %}  width="30"> Новый отклик </p>
+                    {% endif %}     
+
+
+                <p>Пользователь {{response.author}}, откликнулся на ваше объявление - {{response.advertisement}}</p>
+                <p>{{response.text}}</p>
+                <p></p> {{response.datatime}}</p>
+            </div>
+                
+          <div class="pad-ver">
+            {% if response.accepted %}
+              <p> </p>
+                {% else %}
+              Принять отклик?
+              <a class="btn btn-sm btn-default btn-hover-primary" href="{% url 'response_accept' response.id %}">Принять</a>
+              <a class="btn btn-sm btn-default btn-hover-primary" href="{% url 'response_delete' response.id %}">Удалить</a>
+                {% endif %}
+                </div>
+            </div>
+                {% empty %}
+      <h3>Откликов нет</h3>
+            {% endfor %}
+
+          
+    {% endblock content %} 

@@ -1,0 +1,80 @@
+{% extends 'default.html' %}
+{% load static %} 
+ 
+{% block title %}
+Объявления
+{% endblock title %}
+ 
+{% block content %}
+
+<div>{% if user.username %}
+    Пользователь : {{ user.username }}. 
+    <a href='/accounts/logout/'>Выйти</a>
+    <br>
+    <a href="{% url 'all_responses' %}">Личная страница</a><br>
+    <a href="{% url 'add_advertisement' %}">Добавить объявления</a>
+{% else %}
+    <p>Пользователь не авторизирован: {{ user.username }} <a href="/accounts/login/">Войти</a></p>
+{% endif %}
+</div>
+<br>
+
+{% if user_authors  %}
+    
+    <article class="blog-post">
+    <ul class="nav mb-md-0">
+      <li>
+        <a class = edit href="{% url 'edit_advertisement' advertisement.id %}"><u>Редактировать объявления</u></a> &nbsp;&nbsp;&nbsp;&nbsp;
+        <a class = edit href="{% url 'delete_advertisement' advertisement.id %}"><u> Удалить объявления</u></a> 
+      </li>
+    </ul> 
+
+{% else %}
+{% endif %}
+
+
+    {% if advertisement.image %}
+        <p><img src="{{ advertisement.image.url }}" style="width: 100%; float: left; margin-right: 10px; margin-bottom: 40px;"></p>
+    {% else %}
+        <p></p>
+    {% endif %}
+  
+  <h2 class="blog-post-title">{{advertisement.title}}</h2>
+  <p class = "text_d_a">Дата создания:{{ advertisement.datatime}}  &nbsp;&nbsp;&nbsp;&nbsp; Автор:{{advertisement.author}}  &nbsp;&nbsp;&nbsp;&nbsp; Категория: {{advertisement.category}}</p>
+  <hr>
+  <p>{{ advertisement.text }}</p>
+
+  
+
+  {% if advertisement.video %}
+    <video style="width: 100%;">
+      <source src="{{ advertisement.video.url }}" style="margin-bottom: 40px;">
+    </video>
+  {% else %}
+  <p></p>
+  {% endif %}
+</article>
+
+<form action="{% url 'add_response' advertisement.id %}" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="custom-btn btn-13" type="submit">Добавить отклик</button>
+</form>
+<p></p>
+<h4>Отклики:</h4>
+
+
+  {% for response in responses %}
+        <div class="media-body">
+        <div class="mar-btm">
+          <p><img src={% static '/assets/img/men.png' %} width="30"> {{response.author}}:</p>
+        </div>
+        <p style="margin-bottom: 5px;">{{response.text}}</p>
+        <p class="text_d_a">  {{response.datatime}}</p>
+        <hr>
+  {% endfor %}
+  
+
+ 
+
+{% endblock content %}

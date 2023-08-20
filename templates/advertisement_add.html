@@ -1,0 +1,23 @@
+{% extends 'default.html' %}
+
+
+{% block title %}
+Создание объявлений
+{% endblock title %}
+
+{% block content %}
+
+<h3>Добавить обьявление:</h3>
+
+
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <div class="mar-top clearfix">
+        <button class="custom-btn btn-13" type="submit">Добавить </button>
+        </div>
+</form>
+<br/>
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends 'default.html' %}
+ 
+{% block title %} Oбьявления {% endblock title %}
+
+
+ 
+{% block content %}
+<h2>Вы действительно хотите удалить обьявление?</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Удалить">
+</form> 
+<br>
+<h4> {{ advertisement.title }} от {{ advertisement.datatime | date:'d M Y' }} </h4>
+<p> {{ advertisement.text }}</p>
+
+
+ 
+ 
+{% endblock content %}

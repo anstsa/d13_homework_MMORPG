@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>info</title>
+</head>
+<body>
+    <h1>Ваш отклик принят.</h1>
+    <p>Ваш отклик: </p>
+    <p>{{response.text}} на статью <a href="http://127.0.0.1:8000{% url 'advertisement' advertisement.id %}"> {{ advertisement }}</a> принят </p>
+</body>
+</html>
